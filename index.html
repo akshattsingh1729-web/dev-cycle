@@ -1,0 +1,1042 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DEV CYCLE | VELOX FITNESS & CYCLES – World-Class 3D Bicycle & Gym Showroom</title>
+  <meta name="description" content="Experience the pinnacle of cycling engineering and elite fitness machines. Explore 3D interactive performance road bicycles, electric cycles, and commercial gym setups.">
+  <meta name="theme-color" content="#060709">
+
+  <!-- Favicon SVG -->
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='45' fill='%230a0c10' stroke='%2310b981' stroke-width='6'/><path d='M50 20 L35 55 L52 55 L45 80 L70 45 L52 45 Z' fill='%2310b981'/></svg>">
+
+  <!-- Core & Auth Stylesheets -->
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/auth.css">
+
+  <!-- Three.js 3D Library & OrbitControls -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+</head>
+<body>
+
+  <!-- ========================================================================
+       1. PREMIUM NAVIGATION BAR
+       ======================================================================== -->
+  <header class="main-navbar" id="main-navbar">
+    <div class="container nav-inner">
+      <!-- Brand Logo -->
+      <a href="#hero" class="brand-logo" id="nav-brand-logo">
+        <svg class="logo-symbol" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="50" cy="50" r="42" stroke="url(#logo-grad)" stroke-width="6" stroke-dasharray="180 30"/>
+          <path d="M54 22L36 54H53L44 78L70 46H52L58 22Z" fill="#10b981"/>
+          <defs>
+            <linearGradient id="logo-grad" x1="0" y1="0" x2="100" y2="100" gradientUnits="userSpaceOnUse">
+              <stop stop-color="#00ff88"/>
+              <stop offset="1" stop-color="#06b6d4"/>
+            </linearGradient>
+          </defs>
+        </svg>
+        <div class="logo-text-wrap">
+          <span class="logo-title">DEV<span>CYCLE</span></span>
+          <span class="logo-sub">VELOX FITNESS &amp; CYCLES</span>
+        </div>
+      </a>
+
+      <!-- Desktop Navigation Menu -->
+      <nav class="nav-menu" id="nav-desktop-menu">
+        <a href="#hero" class="nav-link">Home</a>
+
+        <div class="nav-has-mega">
+          <a href="#bicycles" class="nav-link">Cycles</a>
+          <div class="mega-menu-container">
+            <div class="mega-grid">
+              <div>
+                <div class="mega-col-title">Performance Disciplines</div>
+                <ul class="mega-links-list">
+                  <li class="mega-link-item"><a href="#bicycles">Aero Road Racing <span>→</span></a></li>
+                  <li class="mega-link-item"><a href="#bicycles">Endurance &amp; Gravel <span>→</span></a></li>
+                  <li class="mega-link-item"><a href="#bicycles">Cross-Country MTB <span>→</span></a></li>
+                  <li class="mega-link-item"><a href="#bicycles">Triathlon &amp; TT <span>→</span></a></li>
+                </ul>
+              </div>
+              <div>
+                <div class="mega-col-title">Elite Brands</div>
+                <ul class="mega-links-list">
+                  <li class="mega-link-item"><a href="#brands">Velox Apex Carbon <span>★</span></a></li>
+                  <li class="mega-link-item"><a href="#brands">Specialized S-Works <span>→</span></a></li>
+                  <li class="mega-link-item"><a href="#brands">Trek Madone &amp; Supercaliber <span>→</span></a></li>
+                  <li class="mega-link-item"><a href="#brands">Scott Addict RC <span>→</span></a></li>
+                </ul>
+              </div>
+              <div class="mega-featured-card">
+                <img src="assets/images/bike_road.jpg" alt="Velox Apex S5">
+                <div class="mega-col-title">Flagship Showcase</div>
+                <p style="font-size:0.75rem; color:var(--metal-silver);">Velox Apex S5 Di2 Monocoque with wind-tunnel validated drag profile.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <a href="#ebikes" class="nav-link">Electric Cycles</a>
+        <a href="#gym" class="nav-link">Gym Equipment</a>
+        <a href="#accessories" class="nav-link">Accessories</a>
+        <a href="#showroom" class="nav-link">Showroom</a>
+        <a href="#faq" class="nav-link">FAQ</a>
+      </nav>
+
+      <!-- Nav Actions (Search, Wishlist, Cart, Visit CTA) -->
+      <div class="nav-actions">
+        <button class="nav-icon-btn" id="btn-open-search" title="Search catalog">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        </button>
+
+        <button class="nav-icon-btn" id="btn-open-wishlist" title="View Wishlist">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+          <span class="nav-badge-pill" id="wishlist-badge-count">0</span>
+        </button>
+
+        <button class="nav-icon-btn" id="btn-open-cart" title="Shopping Cart">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+          <span class="nav-badge-pill" id="cart-badge-count">0</span>
+        </button>
+
+        <!-- Dynamic User Auth Account Widget -->
+        <div id="nav-auth-container" class="nav-auth-wrapper"></div>
+
+        <button class="btn-nav-visit" id="btn-nav-visit">
+          BOOK TEST RIDE
+        </button>
+
+        <button class="mobile-toggle-btn" id="btn-mobile-nav-toggle" aria-label="Open mobile menu">
+          <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Mobile Nav Drawer -->
+  <div class="drawer-overlay" id="mobile-nav-overlay"></div>
+  <div class="side-drawer" id="mobile-nav-drawer" style="left:0; right:auto; transform:translateX(-100%);">
+    <div class="drawer-header">
+      <div class="logo-title">DEV<span>CYCLE</span></div>
+      <button class="drawer-close-btn" id="btn-close-mobile-nav">&times;</button>
+    </div>
+    <div class="drawer-body">
+      <ul class="mega-links-list" style="font-size:1.1rem; gap:1.2rem;">
+        <li><a href="#hero">Home</a></li>
+        <li><a href="#bicycles">Performance Bicycles</a></li>
+        <li><a href="#ebikes">Electric Cycles (E-Bikes)</a></li>
+        <li><a href="#studio-3d">3D Bicycle Configurator</a></li>
+        <li><a href="#gym">Gym &amp; Fitness Machines</a></li>
+        <li><a href="#accessories">Cycling Gear &amp; Accessories</a></li>
+        <li><a href="#why-us">Why Choose Dev Cycle</a></li>
+        <li><a href="#showroom">Showroom &amp; Test Ride Track</a></li>
+        <li><a href="#faq">Frequently Asked Questions</a></li>
+      </ul>
+      <div style="margin-top:2.5rem; display:flex; flex-direction:column; gap:0.8rem;">
+        <button class="btn-primary" onclick="openTestRideModal(); document.getElementById('mobile-nav-drawer').classList.remove('open'); document.getElementById('mobile-nav-overlay').classList.remove('visible');">BOOK TEST RIDE</button>
+        <button class="btn-secondary btn-whatsapp-direct">CHAT ON WHATSAPP</button>
+      </div>
+    </div>
+  </div>
+
+  <main>
+    <!-- ========================================================================
+         2. CINEMATIC 3D HERO SECTION
+         ======================================================================== -->
+    <section class="hero-section" id="hero">
+      <!-- 3D Three.js WebGL Centerpiece Canvas -->
+      <div class="hero-canvas-bg" id="hero-3d-canvas"></div>
+
+      <!-- Hero 2D HUD Overlays -->
+      <div class="container" style="position:relative; z-index:2; height:100%;">
+        <div class="hero-content-wrap">
+          <div class="hero-badge-pill">
+            <span class="pulse-dot"></span>
+            NEXT-GEN SPEED &amp; POWER SHOWROOM
+          </div>
+          <h1 class="hero-headline">
+            RIDE BEYOND <br>
+            <span class="lime-glow">LIMITS.</span>
+          </h1>
+          <p class="hero-subtitle">
+            Premium cycles. Intelligent electric rides. Elite fitness equipment. Everything you need to move stronger.
+          </p>
+          <div class="hero-cta-group">
+            <a href="#bicycles" class="btn-primary" id="btn-hero-explore">
+              EXPLORE COLLECTION
+              <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+            </a>
+            <button class="btn-secondary" id="btn-hero-test-ride">
+              VISIT OUR SHOWROOM
+            </button>
+          </div>
+
+          <!-- Hero Telemetry HUD -->
+          <div class="hero-specs-hud">
+            <div class="hero-hud-stat">
+              <span class="hud-stat-value">6.85 <span>KG</span></span>
+              <span class="hud-stat-label">Toray T1100 Carbon Frame</span>
+            </div>
+            <div class="hero-hud-stat">
+              <span class="hud-stat-value">140 <span>KM</span></span>
+              <span class="hud-stat-label">E-Drive Maximum Range</span>
+            </div>
+            <div class="hero-hud-stat">
+              <span class="hud-stat-value">100% <span>PRO</span></span>
+              <span class="hud-stat-label">Precision Fitting Included</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 3D Viewport Floating Quick Controls -->
+      <div class="hero-3d-controls-overlay">
+        <button class="overlay-control-pill" id="btn-toggle-spin" title="Toggle 360 Spin">
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg>
+          Pause 360°
+        </button>
+        <div class="interactive-hint-pill">
+          🖱️ Click &amp; drag to inspect in full 3D
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================================================================
+         3. FEATURED BRANDS STRIP
+         ======================================================================== -->
+    <section class="brands-section" id="brands">
+      <div class="container">
+        <div class="brands-grid" id="brands-grid">
+          <!-- Rendered dynamically from data.js -->
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================================================================
+         4. SHOP BY CATEGORY
+         ======================================================================== -->
+    <section class="section-padding" id="categories">
+      <div class="container">
+        <div class="section-header">
+          <div class="section-tag">ENGINEERED DIVISIONS</div>
+          <h2 class="section-title">EXPLORE THE <span class="highlight">ECOSYSTEM</span></h2>
+          <p class="section-subtitle">Four specialized disciplines crafted for pure endurance, urban mobility, and athletic strength.</p>
+        </div>
+
+        <div class="categories-grid">
+          <!-- Category 1: Performance Bicycles -->
+          <a href="#bicycles" class="category-tile" id="cat-tile-cycles">
+            <img src="assets/images/bike_road.jpg" alt="Performance Bicycles" class="category-tile-bg">
+            <div class="category-tile-content">
+              <div class="category-tag">ROAD • MTB • GRAVEL</div>
+              <h3 class="category-name">PERFORMANCE BICYCLES</h3>
+              <p class="category-desc">Ultra-light monocoque carbon road racers, high-travel trail MTBs, and multi-surface gravel machines.</p>
+            </div>
+          </a>
+
+          <!-- Category 2: Electric Cycles -->
+          <a href="#ebikes" class="category-tile" id="cat-tile-ebikes">
+            <img src="assets/images/ebike_mtb.jpg" alt="Electric Cycles" class="category-tile-bg">
+            <div class="category-tile-content">
+              <div class="category-tag">INTELLIGENT HYBRID DRIVE</div>
+              <h3 class="category-name">ELECTRIC CYCLES</h3>
+              <p class="category-desc">Integrated 75Nm mid-drive motors, 750Wh high-density battery packs, and pedal-assist technology.</p>
+            </div>
+          </a>
+
+          <!-- Category 3: Gym & Fitness Equipment -->
+          <a href="#gym" class="category-tile" id="cat-tile-gym">
+            <img src="assets/images/gym_showroom.jpg" alt="Gym Equipment" class="category-tile-bg">
+            <div class="category-tile-content">
+              <div class="category-tag">COMMERCIAL &amp; PRIVATE STUDIO</div>
+              <h3 class="category-name">GYM EQUIPMENT</h3>
+              <p class="category-desc">Self-powered curved treadmills, interactive spin trainers, and heavy-gauge structural power cages.</p>
+            </div>
+          </a>
+
+          <!-- Category 4: Cycling Accessories -->
+          <a href="#accessories" class="category-tile" id="cat-tile-acc">
+            <img src="assets/images/accessories_gear.jpg" alt="Cycling Accessories" class="category-tile-bg">
+            <div class="category-tile-content">
+              <div class="category-tag">PRO APPAREL &amp; TECH</div>
+              <h3 class="category-name">CYCLING ACCESSORIES</h3>
+              <p class="category-desc">Wind-tunnel tested carbon helmets, dual BOA pro road shoes, GPS navigation computers, and gear.</p>
+            </div>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================================================================
+         5. BEST-SELLING BICYCLES SECTION
+         ======================================================================== -->
+    <section class="section-padding" id="bicycles" style="background:#090b0e;">
+      <div class="container">
+        <div class="section-header">
+          <div class="section-tag">TOUR DE FORCE</div>
+          <h2 class="section-title">BEST-SELLING <span class="highlight">BICYCLES</span></h2>
+          <p class="section-subtitle">Precision engineered geometry for podium contenders and passionate road riders.</p>
+        </div>
+
+        <div class="filter-tabs-row">
+          <button class="filter-tab filter-tab-cycle active" data-filter="all">All Models</button>
+          <button class="filter-tab filter-tab-cycle" data-filter="road">Road Racing</button>
+          <button class="filter-tab filter-tab-cycle" data-filter="gravel">Gravel &amp; Adventure</button>
+          <button class="filter-tab filter-tab-cycle" data-filter="mountain">Mountain (MTB)</button>
+        </div>
+
+        <div class="products-grid" id="bicycles-grid">
+          <!-- Rendered dynamically -->
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================================================================
+         6. FEATURED ELECTRIC BICYCLES (E-BIKES)
+         ======================================================================== -->
+    <section class="section-padding" id="ebikes">
+      <div class="container">
+        <div class="section-header">
+          <div class="section-tag">TORQUE &amp; RANGE</div>
+          <h2 class="section-title">INTELLIGENT <span class="highlight">ELECTRIC CYCLES</span></h2>
+          <p class="section-subtitle">Effortless power on demand. Conquering steep gradients and city streets with zero friction.</p>
+        </div>
+
+        <div class="products-grid" id="ebikes-grid">
+          <!-- Rendered dynamically -->
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================================================================
+         7. INTERACTIVE 3D BICYCLE SPOTLIGHT / CONFIGURATOR
+         ======================================================================== -->
+    <section class="section-padding studio-3d-section" id="studio-3d">
+      <div class="container">
+        <div class="section-header">
+          <div class="section-tag">3D VIRTUAL ATELIER</div>
+          <h2 class="section-title">INTERACTIVE 3D <span class="highlight">CONFIGURATOR</span></h2>
+          <p class="section-subtitle">Rotate, zoom, inspect component architecture, and customize aerodynamic lacquer finishes in real-time WebGL.</p>
+        </div>
+
+        <div class="studio-grid">
+          <!-- 3D Canvas Studio Container -->
+          <div class="studio-canvas-container">
+            <div id="studio-3d-canvas" style="width:100%; height:100%;"></div>
+
+            <!-- Hotspot Pins Overlay Layer -->
+            <div class="studio-hotspots-layer" id="hotspots-overlay">
+              <div class="hotspot-pin" id="spot-frame">
+                <div class="hotspot-inner-dot"></div>
+                <div class="hotspot-tooltip">
+                  <div class="hotspot-title">Monocoque Aero Frame</div>
+                  <div class="hotspot-desc">Toray T1100 1K carbon fiber with computational wind-tunnel CFD aerodynamic profile.</div>
+                </div>
+              </div>
+
+              <div class="hotspot-pin" id="spot-cockpit">
+                <div class="hotspot-inner-dot"></div>
+                <div class="hotspot-tooltip">
+                  <div class="hotspot-title">Integrated Aero Cockpit</div>
+                  <div class="hotspot-desc">One-piece carbon handlebar with internal Di2 junction and flush GPS mount.</div>
+                </div>
+              </div>
+
+              <div class="hotspot-pin" id="spot-drivetrain">
+                <div class="hotspot-inner-dot"></div>
+                <div class="hotspot-tooltip">
+                  <div class="hotspot-title">Di2 Electronic Shifting</div>
+                  <div class="hotspot-desc">Shimano Dura-Ace 12-Speed wireless electronic drivetrain and hollow carbon crank.</div>
+                </div>
+              </div>
+
+              <div class="hotspot-pin" id="spot-battery">
+                <div class="hotspot-inner-dot"></div>
+                <div class="hotspot-tooltip">
+                  <div class="hotspot-title">Smart Battery Integration</div>
+                  <div class="hotspot-desc">720Wh high-density battery cell built flush within aerodynamic downtube.</div>
+                </div>
+              </div>
+
+              <div class="hotspot-pin" id="spot-wheels">
+                <div class="hotspot-inner-dot"></div>
+                <div class="hotspot-tooltip">
+                  <div class="hotspot-title">DT Swiss ARC 1100 Wheels</div>
+                  <div class="hotspot-desc">50mm deep-dish carbon rims laced to ceramic bearing Ratchet EXP hubs.</div>
+                </div>
+              </div>
+
+              <div class="hotspot-pin" id="spot-brakes">
+                <div class="hotspot-inner-dot"></div>
+                <div class="hotspot-tooltip">
+                  <div class="hotspot-title">Ice-Tech Disc Brakes</div>
+                  <div class="hotspot-desc">160mm ventilated stainless steel / alloy heat dissipation rotors.</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Studio Canvas HUD Controls Bar -->
+            <div class="studio-canvas-hud">
+              <div class="hud-group">
+                <button class="hud-btn active" id="btn-studio-spin">
+                  <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg>
+                  360° Studio Orbit
+                </button>
+              </div>
+              <div class="hud-group">
+                <span class="interactive-hint-pill" style="color:var(--accent-lime);">● Live WebGL PBR Shaders</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Studio Configuration Sidebar -->
+          <div class="studio-sidebar">
+            <div class="section-tag" style="margin-bottom:0.6rem;">CUSTOMIZER ATELIER</div>
+            <h3 class="studio-bike-title">Velox Apex S5</h3>
+            <div class="studio-bike-price">₹3,85,000</div>
+
+            <!-- Color Palette Picker -->
+            <div class="config-section-title">
+              <span>Aero Finish:</span>
+              <span class="val" id="active-color-name">Stealth Onyx</span>
+            </div>
+            <div class="color-swatches-grid">
+              <button class="color-swatch-btn active" data-color="#111315" data-name="Stealth Onyx" style="background:#111315;" title="Stealth Onyx"></button>
+              <button class="color-swatch-btn" data-color="#10b981" data-name="Electric Lime" style="background:#10b981;" title="Electric Lime"></button>
+              <button class="color-swatch-btn" data-color="#e11d48" data-name="Racing Crimson" style="background:#e11d48;" title="Racing Crimson"></button>
+              <button class="color-swatch-btn" data-color="#e2e8f0" data-name="Liquid Platinum" style="background:#e2e8f0;" title="Liquid Platinum"></button>
+            </div>
+
+            <!-- Camera Presets -->
+            <div class="config-section-title">
+              <span>Camera Perspectives:</span>
+            </div>
+            <div class="angle-presets-grid">
+              <button class="angle-preset-btn active" data-preset="all">Full Profile</button>
+              <button class="angle-preset-btn" data-preset="cockpit">Cockpit &amp; GPS</button>
+              <button class="angle-preset-btn" data-preset="drivetrain">Di2 Drivetrain</button>
+              <button class="angle-preset-btn" data-preset="wheels">Aero Wheels</button>
+            </div>
+
+            <!-- Spec Sheet -->
+            <ul class="studio-specs-summary">
+              <li class="studio-spec-item">
+                <span class="label">Total Weight</span>
+                <span class="val">6.85 kg</span>
+              </li>
+              <li class="studio-spec-item">
+                <span class="label">Groupset</span>
+                <span class="val">Shimano Dura-Ace Di2 12S</span>
+              </li>
+              <li class="studio-spec-item">
+                <span class="label">Wheel Depth</span>
+                <span class="val">50mm ARC 1100 Carbon</span>
+              </li>
+              <li class="studio-spec-item">
+                <span class="label">Frame Warranty</span>
+                <span class="val">Lifetime Replacement</span>
+              </li>
+            </ul>
+
+            <button class="btn-primary" id="btn-add-configured-bike" style="width:100%;">
+              ADD CONFIGURED BIKE TO CART
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================================================================
+         8. PREMIUM GYM EQUIPMENT COLLECTION
+         ======================================================================== -->
+    <section class="section-padding" id="gym">
+      <div class="container">
+        <div class="section-header">
+          <div class="section-tag">COMMERCIAL &amp; PRIVATE STUDIO</div>
+          <h2 class="section-title">PREMIUM <span class="highlight">GYM EQUIPMENT</span></h2>
+          <p class="section-subtitle">Commercial-grade strength machines, curved motorless speed treadmills, and smart interactive studio bikes.</p>
+        </div>
+
+        <div class="filter-tabs-row">
+          <button class="filter-tab filter-tab-gym active" data-filter="all">All Equipment</button>
+          <button class="filter-tab filter-tab-gym" data-filter="cardio">Cardio &amp; Treadmills</button>
+          <button class="filter-tab filter-tab-gym" data-filter="strength">Strength &amp; Racks</button>
+        </div>
+
+        <div class="products-grid" id="gym-grid">
+          <!-- Rendered dynamically -->
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================================================================
+         9. WHY CHOOSE OUR SHOWROOM (TRUST & BRAND)
+         ======================================================================== -->
+    <section class="section-padding" id="why-us" style="background:#090b0e;">
+      <div class="container">
+        <div class="section-header">
+          <div class="section-tag">UNMATCHED EXCELLENCE</div>
+          <h2 class="section-title">WHY CHOOSE <span class="highlight">DEV CYCLE</span></h2>
+          <p class="section-subtitle">More than a showroom. A dedicated cycling atelier and elite performance sanctuary.</p>
+        </div>
+
+        <div class="why-us-grid">
+          <div class="feature-box">
+            <div class="feature-icon-wrap">
+              <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+            </div>
+            <h3 class="feature-title">Lifetime Frame Warranty</h3>
+            <p class="feature-desc">Every carbon and titanium frame sold at Dev Cycle is supported by manufacturer lifetime structural warranties with fast-track claims.</p>
+          </div>
+
+          <div class="feature-box">
+            <div class="feature-icon-wrap">
+              <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/><line x1="9" y1="9" x2="9.01" y2="9"/><line x1="15" y1="9" x2="15.01" y2="9"/></svg>
+            </div>
+            <h3 class="feature-title">Retül 3D Bike Fitting</h3>
+            <p class="feature-desc">Our master fit technicians optimize your saddle height, handlebar reach, and cleat alignment to eliminate pain and maximize power transfer.</p>
+          </div>
+
+          <div class="feature-box">
+            <div class="feature-icon-wrap">
+              <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="3" width="15" height="13"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
+            </div>
+            <h3 class="feature-title">White-Glove Delivery &amp; Setup</h3>
+            <p class="feature-desc">Cycles arrive 98% pre-tuned in custom armored bike boxes. In metro cities, our certified technician arrives to set up pedals and tune your fit.</p>
+          </div>
+
+          <div class="feature-box">
+            <div class="feature-icon-wrap">
+              <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg>
+            </div>
+            <h3 class="feature-title">0% Interest EMI Plans</h3>
+            <p class="feature-desc">Flexible financing through leading Indian private banks and NBFC partners with instant paperless verification and flexible repayment tenures.</p>
+          </div>
+
+          <div class="feature-box">
+            <div class="feature-icon-wrap">
+              <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="2"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
+            </div>
+            <h3 class="feature-title">Shimano &amp; SRAM Service Center</h3>
+            <p class="feature-desc">Certified workshop with digital torque wrenches, ultrasonic ultrasonic cassette cleaning tanks, hydraulic bleeding rigs, and factory diagnostics.</p>
+          </div>
+
+          <div class="feature-box">
+            <div class="feature-icon-wrap">
+              <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+            </div>
+            <h3 class="feature-title">24/7 Concierge &amp; WhatsApp</h3>
+            <p class="feature-desc">Direct line to our cycling and fitness engineers for setup guidance, gear recommendations, and immediate roadside or training advice.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================================================================
+         10. BEST-SELLING ACCESSORIES
+         ======================================================================== -->
+    <section class="section-padding" id="accessories">
+      <div class="container">
+        <div class="section-header">
+          <div class="section-tag">PRO GEAR &amp; TELEMETRY</div>
+          <h2 class="section-title">CYCLING <span class="highlight">ACCESSORIES</span></h2>
+          <p class="section-subtitle">Aerodynamic helmets, high-precision GPS computers, high-pressure carbon pumps, and pro cycling apparel.</p>
+        </div>
+
+        <div class="products-grid" id="accessories-grid">
+          <!-- Rendered dynamically -->
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================================================================
+         11. TURNKEY GYM SOLUTIONS & CONSULTATION
+         ======================================================================== -->
+    <section class="section-padding" id="gym-solutions" style="background:#090b0e;">
+      <div class="container">
+        <div class="studio-grid">
+          <div class="showroom-card-map-wrap" style="height:480px;">
+            <img src="assets/images/gym_showroom.jpg" alt="Dev Cycle Commercial Gym Setup" style="width:100%; height:100%; object-fit:cover;">
+            <div class="showroom-map-overlay">
+              <div class="map-badge-card">
+                <div>
+                  <div style="font-weight:800; color:#fff; font-size:1.1rem;">Turnkey Architectural Consultation</div>
+                  <div style="font-size:0.8rem; color:var(--accent-lime);">Residential Villas • Penthouses • Corporate Health Clubs</div>
+                </div>
+                <button class="btn-primary-sm btn-whatsapp-direct">Request 3D Layout</button>
+              </div>
+            </div>
+          </div>
+
+          <div style="display:flex; flex-direction:column; justify-content:center;">
+            <div class="section-tag">COMMERCIAL &amp; RESIDENTIAL</div>
+            <h2 class="section-title" style="font-size:2.2rem; margin-bottom:1rem;">BESPOKE FITNESS <span class="highlight">SUITES</span></h2>
+            <p style="color:var(--metal-silver); font-size:0.95rem; line-height:1.6; margin-bottom:1.5rem;">
+              We don't simply ship machines — our biomechanics consultants and interior architects model custom 3D spatial floor plans, acoustic flooring, and electrical routing.
+            </p>
+            <ul class="studio-specs-summary" style="margin-bottom:2rem;">
+              <li class="studio-spec-item"><span class="label">3D CAD Spatial Layout</span><span class="val">Included</span></li>
+              <li class="studio-spec-item"><span class="label">Acoustic Rubber Tile Floor</span><span class="val">High-Density Shock Dampening</span></li>
+              <li class="studio-spec-item"><span class="label">Delivery &amp; Rigging</span><span class="val">Factory Certified Technicians</span></li>
+              <li class="studio-spec-item"><span class="label">Preventative Maintenance</span><span class="val">Quarterly Calibration Contract</span></li>
+            </ul>
+            <button class="btn-primary btn-whatsapp-direct">
+              BOOK ARCHITECTURAL CONSULTATION
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================================================================
+         12. CUSTOMER TESTIMONIALS
+         ======================================================================== -->
+    <section class="section-padding" id="testimonials">
+      <div class="container">
+        <div class="section-header">
+          <div class="section-tag">RIDER VOICES</div>
+          <h2 class="section-title">VERIFIED <span class="highlight">EXPERIENCES</span></h2>
+          <p class="section-subtitle">Real feedback from competitive racers, daily commuters, and fitness studio owners across India.</p>
+        </div>
+
+        <div class="testimonials-grid" id="testimonials-grid">
+          <!-- Rendered dynamically -->
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================================================================
+         13. SHOWROOM LOCATION & APPOINTMENT
+         ======================================================================== -->
+    <section class="section-padding showroom-section" id="showroom">
+      <div class="container">
+        <div class="section-header">
+          <div class="section-tag">FLAGSHIP DESTINATION</div>
+          <h2 class="section-title">VISIT OUR <span class="highlight">SHOWROOM</span></h2>
+          <p class="section-subtitle">Experience 10,000 sq ft of cycling and fitness engineering with our private outdoor test track.</p>
+        </div>
+
+        <div class="showroom-grid">
+          <div class="showroom-info-box">
+            <div class="showroom-detail-item">
+              <div class="detail-icon">
+                <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+              </div>
+              <div>
+                <h4 class="detail-heading">Showroom Address</h4>
+                <p class="detail-text">Plot 42, Aero Avenue, Indiranagar 100ft Road, Bengaluru, Karnataka 560038, India</p>
+              </div>
+            </div>
+
+            <div class="showroom-detail-item">
+              <div class="detail-icon">
+                <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+              </div>
+              <div>
+                <h4 class="detail-heading">Operating Hours</h4>
+                <p class="detail-text">Monday – Sunday: 09:30 AM – 09:00 PM IST<br><span style="color:var(--accent-lime); font-size:0.8rem;">Private Test-Ride Tracks Open Daily</span></p>
+              </div>
+            </div>
+
+            <div class="showroom-detail-item">
+              <div class="detail-icon">
+                <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+              </div>
+              <div>
+                <h4 class="detail-heading">Direct Concierge</h4>
+                <p class="detail-text">+91 98765 43210 • concierge@devcycle.in</p>
+              </div>
+            </div>
+
+            <div style="display:flex; gap:1rem; margin-top:1rem;">
+              <button class="btn-primary" onclick="openTestRideModal()">
+                SCHEDULE APPOINTMENT
+              </button>
+              <button class="btn-secondary btn-whatsapp-direct">
+                WHATSAPP CONCIERGE
+              </button>
+            </div>
+          </div>
+
+          <!-- Interactive Simulated Map Card -->
+          <div class="showroom-card-map-wrap">
+            <img src="assets/images/hero_ebike.jpg" alt="Dev Cycle Showroom Map" class="showroom-map-bg">
+            <div class="showroom-map-overlay">
+              <div class="map-badge-card">
+                <div>
+                  <div style="font-weight:800; color:#fff; font-size:1.05rem;">Dev Cycle Bengaluru Flagship</div>
+                  <div style="font-size:0.8rem; color:var(--metal-silver);">Indiranagar 100ft Road • Test Track Active</div>
+                </div>
+                <a href="https://maps.google.com" target="_blank" class="btn-primary-sm">Get Directions</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================================================================
+         14. WHATSAPP CONSULTATION BANNER
+         ======================================================================== -->
+    <section class="whatsapp-banner-section">
+      <div class="container">
+        <div class="wa-banner-card">
+          <div>
+            <h2 class="wa-banner-title">NEED EXPERT GUIDANCE?</h2>
+            <p class="wa-banner-desc">Our certified bicycle fitters and gym equipment architects are available directly on WhatsApp for sizing, custom builds, and pricing.</p>
+          </div>
+          <button class="btn-whatsapp-large btn-whatsapp-direct">
+            <svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor"><path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.816 9.816 0 0 0 12.04 2zm0 18.05c-1.48 0-2.93-.4-4.2-1.15l-.3-.18-3.12.82.83-3.04-.2-.31a8.167 8.167 0 0 1-1.26-4.28c0-4.51 3.67-8.18 8.18-8.18 2.18 0 4.24.85 5.78 2.39a8.13 8.13 0 0 1 2.4 5.79c0 4.51-3.67 8.18-8.18 8.18zm4.49-6.13c-.25-.12-1.46-.72-1.69-.81-.23-.08-.39-.12-.56.12-.17.25-.64.81-.79.97-.14.17-.29.19-.53.07-.25-.12-1.04-.38-1.98-1.22-.73-.65-1.23-1.45-1.37-1.7-.14-.25-.01-.38.11-.5.11-.11.25-.29.37-.43.12-.15.17-.25.25-.42.08-.17.04-.31-.02-.43s-.56-1.34-.76-1.84c-.2-.48-.4-.42-.56-.43h-.48c-.17 0-.43.06-.66.31-.23.25-.87.85-.87 2.07s.89 2.4 1.01 2.57c.12.17 1.75 2.67 4.24 3.74.59.26 1.05.41 1.41.53.6.19 1.14.16 1.57.1.48-.07 1.46-.6 1.67-1.17.21-.58.21-1.07.15-1.17-.06-.11-.23-.17-.48-.29z"/></svg>
+            START WHATSAPP CHAT
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================================================================
+         15. FAQ ACCORDION & NEWSLETTER
+         ======================================================================== -->
+    <section class="section-padding" id="faq" style="background:#090b0e;">
+      <div class="container">
+        <div class="section-header">
+          <div class="section-tag">ANSWERS &amp; ASSISTANCE</div>
+          <h2 class="section-title">FREQUENTLY ASKED <span class="highlight">QUESTIONS</span></h2>
+          <p class="section-subtitle">Everything you need to know about test rides, warranty, shipping, and custom gym packages.</p>
+        </div>
+
+        <div class="faq-accordion" id="faq-accordion">
+          <!-- Rendered dynamically -->
+        </div>
+
+        <!-- Newsletter Subscription Box -->
+        <div class="newsletter-section">
+          <div class="section-tag">VIP INNER CIRCLE</div>
+          <h3 style="font-size:1.8rem; font-weight:800; color:#fff;">JOIN THE DEV CYCLE COLLECTIVE</h3>
+          <p style="color:var(--metal-silver); font-size:0.9rem; margin-top:0.4rem;">Receive invitations to exclusive group rides, track days, and private launch discounts.</p>
+          <form class="newsletter-form-wrap" id="newsletter-form">
+            <input type="email" class="newsletter-input" id="newsletter-email" placeholder="Enter your email address" required>
+            <button type="submit" class="btn-primary" style="padding:0.75rem 1.6rem;">JOIN NOW</button>
+          </form>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ========================================================================
+       16. PREMIUM FOOTER
+       ======================================================================== -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand-col">
+          <div class="logo-title">DEV<span>CYCLE</span></div>
+          <div class="logo-sub">VELOX FITNESS &amp; CYCLES</div>
+          <p class="footer-desc">
+            India's premier high-performance cycling showroom and turnkey gym studio contractor. Curating the world's most advanced aerodynamic bicycles, electric cycles, and commercial training machines.
+          </p>
+          <div class="footer-social-links">
+            <a href="#" class="social-icon-btn" aria-label="Instagram">
+              <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+            </a>
+            <a href="#" class="social-icon-btn" aria-label="YouTube">
+              <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33A2.78 2.78 0 0 0 3.4 19c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.25 29 29 0 0 0-.46-5.33z"/><polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02"/></svg>
+            </a>
+            <a href="#" class="social-icon-btn" aria-label="Strava">
+              <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M15.387 17.944l-2.089-4.116h-3.065L15.387 24l5.15-10.172h-3.066m-7.008-5.599l2.836 5.598h4.172L10.463 0l-7.926 15.656h4.172"/></svg>
+            </a>
+          </div>
+        </div>
+
+        <div>
+          <div class="footer-col-title">Categories</div>
+          <ul class="footer-links-list">
+            <li><a href="#bicycles">Aero Road Racing</a></li>
+            <li><a href="#bicycles">Endurance &amp; Gravel</a></li>
+            <li><a href="#ebikes">Electric Cycles (E-Bikes)</a></li>
+            <li><a href="#gym">Commercial Treadmills</a></li>
+            <li><a href="#gym">Power Racks &amp; Multi-Gym</a></li>
+            <li><a href="#accessories">Helmets &amp; Tech Gear</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <div class="footer-col-title">Services</div>
+          <ul class="footer-links-list">
+            <li><a href="#showroom">Showroom Test Track</a></li>
+            <li><a href="#why-us">Retül 3D Bike Fitting</a></li>
+            <li><a href="#why-us">Shimano Di2 Diagnostics</a></li>
+            <li><a href="#gym-solutions">3D Gym Architectural Design</a></li>
+            <li><a href="#why-us">0% Interest EMI Finance</a></li>
+            <li><a href="#showroom">White-Glove Doorstep Assembly</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <div class="footer-col-title">Showroom HQ</div>
+          <ul class="footer-links-list">
+            <li><span style="color:#ffffff;">Bengaluru Flagship:</span> Plot 42, 100ft Rd, Indiranagar</li>
+            <li><span style="color:#ffffff;">Phone:</span> +91 98765 43210</li>
+            <li><span style="color:#ffffff;">WhatsApp:</span> +91 98765 43210</li>
+            <li><span style="color:#ffffff;">Hours:</span> 09:30 AM – 09:00 PM</li>
+            <li><span style="color:#ffffff;">Email:</span> concierge@devcycle.in</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="footer-bottom-bar">
+        <div>&copy; 2026 DEV CYCLE (VELOX FITNESS &amp; CYCLES). All Rights Reserved.</div>
+        <div>Engineered with Three.js WebGL, High-PBR Shaders &amp; High-Frequency Precision.</div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ========================================================================
+       DRAWERS & MODALS
+       ======================================================================== -->
+
+  <!-- 1. Shopping Cart Drawer -->
+  <div class="drawer-overlay" id="cart-overlay"></div>
+  <aside class="side-drawer" id="cart-drawer">
+    <div class="drawer-header">
+      <div class="drawer-title">Shopping Cart</div>
+      <button class="drawer-close-btn" id="btn-close-cart">&times;</button>
+    </div>
+    <div class="drawer-body">
+      <div class="cart-empty-state" id="cart-empty-state">
+        <svg viewBox="0 0 24 24" width="48" height="48" fill="none" stroke="currentColor" stroke-width="1.5" style="margin-bottom:1rem; color:var(--metal-slate);"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+        <p>Your shopping cart is currently empty.</p>
+        <button class="btn-primary-sm" onclick="closeCartDrawer(); window.location.hash='#bicycles';" style="margin-top:1rem;">Explore Bicycles</button>
+      </div>
+      <div class="cart-items-list" id="cart-items-list">
+        <!-- Rendered dynamically -->
+      </div>
+    </div>
+    <div class="drawer-footer" id="cart-footer-summary">
+      <div class="cart-coupon-wrap">
+        <input type="text" class="cart-coupon-input" id="cart-coupon-input" placeholder="Promo code (try DEVVIP10)">
+        <button class="btn-primary-sm" id="btn-apply-coupon">Apply</button>
+      </div>
+      <div class="cart-summary-line">
+        <span>Subtotal:</span>
+        <span id="cart-subtotal-val">₹0</span>
+      </div>
+      <div class="cart-summary-line" id="cart-discount-row" style="display:none; color:var(--accent-lime);">
+        <span>VIP Promo Discount:</span>
+        <span id="cart-discount-val">- ₹0</span>
+      </div>
+      <div class="cart-summary-line">
+        <span>Metro Doorstep Delivery:</span>
+        <span style="color:var(--accent-lime);">FREE</span>
+      </div>
+      <div class="cart-summary-line total-line">
+        <span>Total Payable:</span>
+        <span id="cart-total-val" style="color:var(--accent-lime);">₹0</span>
+      </div>
+      <div style="display:flex; gap:0.6rem; margin-top:1.2rem;">
+        <button class="btn-primary" id="btn-proceed-checkout" style="flex:1;">
+          PROCEED TO CHECKOUT
+        </button>
+        <button class="btn-secondary" id="btn-clear-cart" style="padding:0.75rem 1rem;" title="Clear Cart">
+          Clear
+        </button>
+      </div>
+    </div>
+  </aside>
+
+  <!-- 2. Wishlist Drawer -->
+  <div class="drawer-overlay" id="wishlist-overlay"></div>
+  <aside class="side-drawer" id="wishlist-drawer">
+    <div class="drawer-header">
+      <div class="drawer-title">Saved Wishlist</div>
+      <button class="drawer-close-btn" id="btn-close-wishlist">&times;</button>
+    </div>
+    <div class="drawer-body">
+      <div class="wishlist-empty-state" id="wishlist-empty-state">
+        <svg viewBox="0 0 24 24" width="48" height="48" fill="none" stroke="currentColor" stroke-width="1.5" style="margin-bottom:1rem; color:var(--metal-slate);"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+        <p>Your wishlist is empty. Save your favorite bicycles and equipment for later.</p>
+      </div>
+      <div class="cart-items-list" id="wishlist-items-list">
+        <!-- Rendered dynamically -->
+      </div>
+    </div>
+  </aside>
+
+  <!-- 3. Global Live Search Modal -->
+  <div class="modal-backdrop" id="search-modal">
+    <div class="modal-card" style="max-width:680px; padding:2rem;">
+      <button class="modal-close-btn" id="btn-close-search">&times;</button>
+      <div style="font-family:var(--font-mono); font-size:0.75rem; color:var(--accent-lime); margin-bottom:0.6rem;">LIVE CATALOG EXPLORER</div>
+      <input type="text" class="form-input" id="search-query-input" placeholder="Search by model, brand, e-bike, gym or spec..." style="width:100%; font-size:1.1rem; padding:1rem 1.2rem; margin-bottom:1.5rem;">
+      <div id="search-results-list" style="display:flex; flex-direction:column; gap:0.8rem; max-height:420px; overflow-y:auto;">
+        <!-- Rendered dynamically -->
+      </div>
+    </div>
+  </div>
+
+  <!-- 4. Product Quick View Modal -->
+  <div class="modal-backdrop" id="quickview-modal">
+    <div class="modal-card">
+      <button class="modal-close-btn" id="btn-close-quickview">&times;</button>
+      <div id="quickview-content-body">
+        <!-- Rendered dynamically -->
+      </div>
+    </div>
+  </div>
+
+  <!-- 5. Product Comparison Modal -->
+  <div class="modal-backdrop" id="compare-modal">
+    <div class="modal-card" style="max-width:1100px;">
+      <button class="modal-close-btn" id="btn-close-compare">&times;</button>
+      <div class="section-tag">SIDE-BY-SIDE MATRIX</div>
+      <h2 style="font-size:1.8rem; margin-bottom:1.5rem;">SPECIFICATION COMPARISON</h2>
+      <div id="compare-table-container" style="overflow-x:auto;">
+        <!-- Rendered dynamically -->
+      </div>
+    </div>
+  </div>
+
+  <!-- Floating Comparison Bar -->
+  <div class="compare-floating-bar" id="compare-floating-bar">
+    <div style="display:flex; align-items:center; gap:0.6rem;">
+      <span style="font-weight:800; color:#fff;" id="compare-count-num">0</span>
+      <span style="font-size:0.82rem; color:var(--metal-silver);">models selected for comparison</span>
+    </div>
+    <div style="display:flex; gap:0.6rem;">
+      <button class="btn-primary-sm" id="btn-open-compare-modal">Compare Now</button>
+      <button class="btn-primary-sm" id="btn-clear-compare" style="background:#334155; color:#fff;">Clear</button>
+    </div>
+  </div>
+
+  <!-- 6. Test Ride & Showroom Appointment Modal -->
+  <div class="modal-backdrop" id="test-ride-modal">
+    <div class="modal-card" style="max-width:620px;">
+      <button class="modal-close-btn" id="btn-close-test-ride">&times;</button>
+      <div class="section-tag">TEST RIDE EXPERIENCE</div>
+      <h2 style="font-size:1.8rem; margin-bottom:0.4rem;">BOOK A SHOWROOM TEST RIDE</h2>
+      <p style="color:var(--metal-steel); font-size:0.88rem; margin-bottom:1.8rem;">Experience the bike on our private tarmac track with our master fit technicians.</p>
+
+      <form id="test-ride-form">
+        <div class="form-grid">
+          <div class="form-group full-width">
+            <label class="form-label">Select Bike or Equipment</label>
+            <select class="form-select" id="ride-bike-select" required></select>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Full Name</label>
+            <input type="text" class="form-input" id="ride-name" placeholder="Rider Name" required>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Mobile Number</label>
+            <input type="tel" class="form-input" id="ride-phone" placeholder="+91 98765 XXXXX" required>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Preferred Date</label>
+            <input type="date" class="form-input" id="ride-date" required>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Time Slot</label>
+            <select class="form-select" id="ride-time">
+              <option>10:00 AM – 11:30 AM</option>
+              <option>11:30 AM – 01:00 PM</option>
+              <option>02:30 PM – 04:00 PM</option>
+              <option>04:00 PM – 05:30 PM</option>
+              <option>06:00 PM – 07:30 PM</option>
+            </select>
+          </div>
+          <div class="form-group full-width">
+            <label class="form-label">Rider Height / Bike Fitting Notes (Optional)</label>
+            <input type="text" class="form-input" id="ride-notes" placeholder="e.g. 178 cm, road cleats SPD-SL">
+          </div>
+        </div>
+        <button type="submit" class="btn-primary" style="width:100%;">
+          CONFIRM TEST RIDE RESERVATION
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- 7. Responsive Checkout Modal -->
+  <div class="modal-backdrop" id="checkout-modal">
+    <div class="modal-card" style="max-width:720px;">
+      <button class="modal-close-btn" id="btn-close-checkout">&times;</button>
+      <div class="section-tag">SECURE CHECKOUT</div>
+      <h2 style="font-size:1.8rem; margin-bottom:0.4rem;">FINALIZE YOUR ORDER</h2>
+      <div style="display:flex; justify-content:space-between; background:rgba(255,255,255,0.03); padding:0.8rem 1.2rem; border-radius:8px; margin-bottom:1.5rem; font-size:0.9rem;">
+        <span id="checkout-items-count">0 items</span>
+        <span style="font-weight:800; color:var(--accent-lime);" id="checkout-order-total">₹0</span>
+      </div>
+
+      <form id="checkout-form">
+        <div class="form-grid">
+          <div class="form-group">
+            <label class="form-label">First Name</label>
+            <input type="text" class="form-input" placeholder="Aakash" required>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Last Name</label>
+            <input type="text" class="form-input" placeholder="Sharma" required>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Contact Email</label>
+            <input type="email" class="form-input" placeholder="aakash@example.com" required>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Phone Number</label>
+            <input type="tel" class="form-input" placeholder="+91 98765 XXXXX" required>
+          </div>
+          <div class="form-group full-width">
+            <label class="form-label">Shipping Address</label>
+            <input type="text" class="form-input" placeholder="Apartment / Villa, Street, Landmark" required>
+          </div>
+          <div class="form-group">
+            <label class="form-label">City</label>
+            <input type="text" class="form-input" placeholder="Bengaluru" required>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Pincode</label>
+            <input type="text" class="form-input" placeholder="560038" required>
+          </div>
+          <div class="form-group full-width">
+            <label class="form-label">Select Payment Method</label>
+            <select class="form-select" id="checkout-payment-method">
+              <option>UPI Instant Transfer (GPay / PhonePe / Paytm)</option>
+              <option>0% Interest EMI (HDFC / ICICI / Axis)</option>
+              <option>Credit / Debit Card (Visa / Mastercard / Amex)</option>
+              <option>Net Banking (All Major Indian Banks)</option>
+              <option>Showroom Wire Transfer</option>
+            </select>
+          </div>
+        </div>
+        <button type="submit" class="btn-primary" style="width:100%;">
+          COMPLETE SECURE PAYMENT
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Floating Direct WhatsApp Button -->
+  <div class="whatsapp-floating-widget" id="whatsapp-floating-btn" title="Chat on WhatsApp with Showroom Concierge">
+    <svg viewBox="0 0 24 24" width="32" height="32" fill="currentColor"><path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.816 9.816 0 0 0 12.04 2zm0 18.05c-1.48 0-2.93-.4-4.2-1.15l-.3-.18-3.12.82.83-3.04-.2-.31a8.167 8.167 0 0 1-1.26-4.28c0-4.51 3.67-8.18 8.18-8.18 2.18 0 4.24.85 5.78 2.39a8.13 8.13 0 0 1 2.4 5.79c0 4.51-3.67 8.18-8.18 8.18zm4.49-6.13c-.25-.12-1.46-.72-1.69-.81-.23-.08-.39-.12-.56.12-.17.25-.64.81-.79.97-.14.17-.29.19-.53.07-.25-.12-1.04-.38-1.98-1.22-.73-.65-1.23-1.45-1.37-1.7-.14-.25-.01-.38.11-.5.11-.11.25-.29.37-.43.12-.15.17-.25.25-.42.08-.17.04-.31-.02-.43s-.56-1.34-.76-1.84c-.2-.48-.4-.42-.56-.43h-.48c-.17 0-.43.06-.66.31-.23.25-.87.85-.87 2.07s.89 2.4 1.01 2.57c.12.17 1.75 2.67 4.24 3.74.59.26 1.05.41 1.41.53.6.19 1.14.16 1.57.1.48-.07 1.46-.6 1.67-1.17.21-.58.21-1.07.15-1.17-.06-.11-.23-.17-.48-.29z"/></svg>
+  </div>
+
+  <!-- Supabase Official Client & Auth Integration -->
+  <script src="js/libs/supabase.js"></script>
+  <script>
+    if (!window.supabase) {
+      document.write('<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"><\/script>');
+    }
+  </script>
+  <script src="js/supabase-config.js"></script>
+  <script src="js/supabase.js"></script>
+  <script src="js/auth.js"></script>
+
+  <!-- JavaScript Applications -->
+  <script src="js/data.js"></script>
+  <script src="js/three-scene.js"></script>
+  <script src="js/store.js"></script>
+  <script src="js/app.js"></script>
+
+</body>
+</html>

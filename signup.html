@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Create Account | DEV CYCLE – Luxury 3D Bicycle & Fitness Showroom</title>
+  <meta name="description" content="Join DEV CYCLE Showroom to unlock bespoke 3D bicycle customizations, exclusive track test rides, and priority machine delivery.">
+  <meta name="theme-color" content="#060709">
+
+  <!-- Favicon SVG -->
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='45' fill='%230a0c10' stroke='%2310b981' stroke-width='6'/><path d='M50 20 L35 55 L52 55 L45 80 L70 45 L52 45 Z' fill='%2310b981'/></svg>">
+
+  <!-- Core & Auth Stylesheets -->
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/auth.css">
+
+  <!-- Official Supabase JavaScript Client -->
+  <script src="js/libs/supabase.js"></script>
+  <script>
+    if (!window.supabase) {
+      document.write('<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"><\/script>');
+    }
+  </script>
+
+  <!-- App Auth & Config Modules -->
+  <script src="js/supabase-config.js"></script>
+  <script src="js/supabase.js"></script>
+  <script src="js/auth.js"></script>
+</head>
+<body class="auth-page-wrapper">
+
+  <!-- Fullscreen Guard Loader -->
+  <div class="auth-guard-loader-wrap" id="auth-guard-loader">
+    <div class="auth-guard-spinner"></div>
+    <div class="auth-guard-text">Checking Authentication...</div>
+  </div>
+
+  <!-- Minimal Header -->
+  <header class="auth-header-minimal">
+    <a href="index.html" class="brand-logo" id="auth-brand-logo">
+      <svg class="logo-symbol" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="50" cy="50" r="42" stroke="url(#logo-grad)" stroke-width="6" stroke-dasharray="180 30"/>
+        <path d="M54 22L36 54H53L44 78L70 46H52L58 22Z" fill="#10b981"/>
+        <defs>
+          <linearGradient id="logo-grad" x1="0" y1="0" x2="100" y2="100" gradientUnits="userSpaceOnUse">
+            <stop stop-color="#00ff88"/>
+            <stop offset="1" stop-color="#06b6d4"/>
+          </linearGradient>
+        </defs>
+      </svg>
+      <div class="logo-text-wrap">
+        <span class="logo-title">DEV<span>CYCLE</span></span>
+        <span class="logo-sub">VELOX FITNESS &amp; CYCLES</span>
+      </div>
+    </a>
+
+    <a href="index.html" class="auth-back-link">
+      <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+      Back to Showroom
+    </a>
+  </header>
+
+  <!-- Main Sign Up Card Container -->
+  <main class="auth-main-container" id="guest-page-content" style="display:none;">
+    <div class="auth-card" style="max-width: 520px;">
+      <div class="auth-badge-pill">
+        <span class="pulse-dot"></span>
+        JOIN THE SHOWROOM VIP
+      </div>
+
+      <h1 class="auth-title">Create an Account</h1>
+      <p class="auth-subtitle">Register to save your 3D custom builds, book test rides on our indoor velodrome, and track orders.</p>
+
+      <!-- Alert Notification Area -->
+      <div id="auth-alert-box" style="display: none;"></div>
+
+      <!-- Google OAuth Button -->
+      <button type="button" class="btn-google-oauth" id="btn-google-signup">
+        <svg viewBox="0 0 24 24" width="20" height="20">
+          <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
+          <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
+          <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z"/>
+          <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z"/>
+        </svg>
+        <span>Sign up with Google</span>
+      </button>
+
+      <div class="auth-divider">
+        <span>or register with email</span>
+      </div>
+
+      <!-- Registration Form -->
+      <form id="signup-form" novalidate>
+        <!-- Full Name -->
+        <div class="auth-form-group">
+          <label class="auth-label" for="signup-name">Full Name</label>
+          <div class="auth-input-wrapper">
+            <svg class="auth-input-icon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+            <input 
+              type="text" 
+              id="signup-name" 
+              name="name" 
+              class="auth-input" 
+              placeholder="e.g. Aakash Sharma" 
+              autocomplete="name" 
+              required
+            >
+          </div>
+        </div>
+
+        <!-- Email Address -->
+        <div class="auth-form-group">
+          <label class="auth-label" for="signup-email">Email Address</label>
+          <div class="auth-input-wrapper">
+            <svg class="auth-input-icon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+            <input 
+              type="email" 
+              id="signup-email" 
+              name="email" 
+              class="auth-input" 
+              placeholder="rider@example.com" 
+              autocomplete="email" 
+              required
+            >
+          </div>
+        </div>
+
+        <!-- Password -->
+        <div class="auth-form-group">
+          <label class="auth-label" for="signup-password">Password</label>
+          <div class="auth-input-wrapper">
+            <svg class="auth-input-icon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+            <input 
+              type="password" 
+              id="signup-password" 
+              name="password" 
+              class="auth-input has-toggle" 
+              placeholder="At least 8 characters" 
+              autocomplete="new-password" 
+              required
+            >
+            <button type="button" class="auth-input-toggle" id="btn-toggle-signup-password" title="Show or hide password">
+              <svg id="eye-icon-1" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+            </button>
+          </div>
+
+          <!-- Live Password Strength Meter -->
+          <div class="password-meter-wrap" id="password-meter" style="display:none;">
+            <div class="password-meter-header">
+              <span class="password-meter-label">Password Strength:</span>
+              <span class="password-meter-score" id="meter-score-text">Weak</span>
+            </div>
+            <div class="password-meter-track">
+              <div class="password-meter-fill" id="meter-score-fill"></div>
+            </div>
+            <div class="password-requirements">
+              <div class="req-item" id="req-len">
+                <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/></svg>
+                <span>8+ Characters</span>
+              </div>
+              <div class="req-item" id="req-case">
+                <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/></svg>
+                <span>Upper &amp; Lowercase</span>
+              </div>
+              <div class="req-item" id="req-num">
+                <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/></svg>
+                <span>At least 1 Number</span>
+              </div>
+              <div class="req-item" id="req-sym">
+                <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/></svg>
+                <span>Special Symbol</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Confirm Password -->
+        <div class="auth-form-group">
+          <label class="auth-label" for="signup-confirm-password">Confirm Password</label>
+          <div class="auth-input-wrapper">
+            <svg class="auth-input-icon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+            <input 
+              type="password" 
+              id="signup-confirm-password" 
+              name="confirmPassword" 
+              class="auth-input has-toggle" 
+              placeholder="Re-enter your password" 
+              autocomplete="new-password" 
+              required
+            >
+            <button type="button" class="auth-input-toggle" id="btn-toggle-confirm-password" title="Show or hide password">
+              <svg id="eye-icon-2" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+            </button>
+          </div>
+        </div>
+
+        <!-- Terms Agreement Checkbox -->
+        <label class="auth-checkbox-wrap">
+          <input type="checkbox" id="signup-agree" class="auth-checkbox" required>
+          <span class="auth-checkbox-label">
+            I agree to the <a href="#terms">Terms of Service</a> and <a href="#privacy">Privacy Policy</a>
+          </span>
+        </label>
+
+        <!-- Submit Button -->
+        <button type="submit" class="btn-auth-submit" id="btn-signup-submit">
+          <span class="btn-auth-spinner"></span>
+          <span class="btn-auth-text">CREATE MY ACCOUNT</span>
+        </button>
+      </form>
+
+      <!-- Footer -->
+      <div class="auth-card-footer">
+        Already a member? 
+        <a href="login.html" id="link-to-login">Sign In Here</a>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', async () => {
+      // 1. Guard check
+      await window.devAuth.requireGuest({ defaultRedirect: 'dashboard.html' });
+
+      const form = document.getElementById('signup-form');
+      const submitBtn = document.getElementById('btn-signup-submit');
+      const nameInput = document.getElementById('signup-name');
+      const emailInput = document.getElementById('signup-email');
+      const passwordInput = document.getElementById('signup-password');
+      const confirmInput = document.getElementById('signup-confirm-password');
+      const agreeCheckbox = document.getElementById('signup-agree');
+      const alertBox = document.getElementById('auth-alert-box');
+      const googleBtn = document.getElementById('btn-google-signup');
+
+      // Password Meter Elements
+      const meterWrap = document.getElementById('password-meter');
+      const meterText = document.getElementById('meter-score-text');
+      const meterFill = document.getElementById('meter-score-fill');
+      const reqLen = document.getElementById('req-len');
+      const reqCase = document.getElementById('req-case');
+      const reqNum = document.getElementById('req-num');
+      const reqSym = document.getElementById('req-sym');
+
+      // Setup show/hide toggles
+      setupToggle('btn-toggle-signup-password', 'signup-password', 'eye-icon-1');
+      setupToggle('btn-toggle-confirm-password', 'signup-confirm-password', 'eye-icon-2');
+
+      function setupToggle(btnId, inputId, iconId) {
+        const btn = document.getElementById(btnId);
+        const input = document.getElementById(inputId);
+        const icon = document.getElementById(iconId);
+        btn.addEventListener('click', () => {
+          const isPass = input.type === 'password';
+          input.type = isPass ? 'text' : 'password';
+          icon.innerHTML = isPass
+            ? '<path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"/><line x1="1" y1="1" x2="23" y2="23"/>'
+            : '<path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/>';
+        });
+      }
+
+      // Live Password Strength Tracking
+      passwordInput.addEventListener('input', () => {
+        const val = passwordInput.value;
+        if (!val) {
+          meterWrap.style.display = 'none';
+          return;
+        }
+
+        meterWrap.style.display = 'block';
+        const strength = window.devAuth.checkPasswordStrength(val);
+
+        meterText.textContent = strength.label;
+        meterText.style.color = strength.color;
+        meterFill.style.backgroundColor = strength.color;
+        meterFill.style.width = (strength.score * 25) + '%';
+
+        updateReq(reqLen, strength.checks.length);
+        updateReq(reqCase, strength.checks.lowercase && strength.checks.uppercase);
+        updateReq(reqNum, strength.checks.number);
+        updateReq(reqSym, strength.checks.special);
+      });
+
+      function updateReq(el, isValid) {
+        if (isValid) {
+          el.classList.add('valid');
+          el.querySelector('svg').innerHTML = '<polyline points="20 6 9 17 4 12"/>';
+        } else {
+          el.classList.remove('valid');
+          el.querySelector('svg').innerHTML = '<circle cx="12" cy="12" r="10"/>';
+        }
+      }
+
+      // Google OAuth Sign Up
+      googleBtn.addEventListener('click', async () => {
+        googleBtn.disabled = true;
+        googleBtn.style.opacity = '0.6';
+        showAlert('Connecting with Google...', 'info');
+        const res = await window.devAuth.signInWithGoogle();
+        if (!res.success) {
+          showAlert(res.error, 'error');
+          googleBtn.disabled = false;
+          googleBtn.style.opacity = '1';
+        }
+      });
+
+      // Submit Sign Up Form
+      form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        hideAlert();
+
+        const fullName = nameInput.value.trim();
+        const email = emailInput.value.trim();
+        const password = passwordInput.value;
+        const confirmPassword = confirmInput.value;
+
+        // Validation
+        if (!fullName) {
+          showAlert('Please enter your full name.', 'error');
+          nameInput.focus();
+          return;
+        }
+
+        if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+          showAlert('Please enter a valid email address.', 'error');
+          emailInput.focus();
+          return;
+        }
+
+        if (password.length < 8) {
+          showAlert('Password must be at least 8 characters long.', 'error');
+          passwordInput.focus();
+          return;
+        }
+
+        if (password !== confirmPassword) {
+          showAlert('Passwords do not match. Please verify both fields.', 'error');
+          confirmInput.focus();
+          return;
+        }
+
+        if (!agreeCheckbox.checked) {
+          showAlert('Please accept the Terms of Service to create your account.', 'error');
+          return;
+        }
+
+        // Loading state
+        submitBtn.disabled = true;
+        submitBtn.classList.add('loading');
+        submitBtn.querySelector('.btn-auth-text').textContent = 'CREATING ACCOUNT...';
+
+        const result = await window.devAuth.signUp({ email, password, fullName });
+
+        if (result.success) {
+          if (result.isEmailConfirmationRequired) {
+            showAlert(
+              `<strong>Account registered!</strong> We've sent a verification link to <strong>${email}</strong>. Please check your inbox to activate your account.`,
+              'success'
+            );
+            form.reset();
+            meterWrap.style.display = 'none';
+            submitBtn.disabled = false;
+            submitBtn.classList.remove('loading');
+            submitBtn.querySelector('.btn-auth-text').textContent = 'ACCOUNT CREATED';
+          } else {
+            showAlert('Registration successful! Redirecting to your dashboard...', 'success');
+            setTimeout(() => {
+              window.location.href = 'dashboard.html';
+            }, 600);
+          }
+        } else {
+          submitBtn.disabled = false;
+          submitBtn.classList.remove('loading');
+          submitBtn.querySelector('.btn-auth-text').textContent = 'CREATE MY ACCOUNT';
+          showAlert(result.error, 'error');
+        }
+      });
+
+      function showAlert(message, type = 'error') {
+        const iconSvg = type === 'error'
+          ? '<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>'
+          : type === 'success'
+          ? '<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>'
+          : '<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="8"/></svg>';
+
+        alertBox.className = `auth-alert auth-alert-${type}`;
+        alertBox.innerHTML = `
+          ${iconSvg}
+          <div style="flex:1;">${message}</div>
+          <button type="button" class="auth-alert-close" onclick="this.parentElement.style.display='none'">&times;</button>
+        `;
+        alertBox.style.display = 'flex';
+      }
+
+      function hideAlert() {
+        alertBox.style.display = 'none';
+      }
+    });
+  </script>
+</body>
+</html>
