@@ -46,6 +46,34 @@ while ($listener.IsListening) {
             $urlPath = "index.html"
         }
 
+        # Dynamic /env.js endpoint to load environment variables from .env
+        if ($urlPath -eq "env.js") {
+            $envFile = Join-Path $baseDir ".env"
+            $urlVal = "https://wzjqntgujuptcfxklcxt.supabase.co"
+            $keyVal = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Ind6anFudGd1anVwdGNmeGtsY3h0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTIwNzk5MDUsImV4cCI6MjEwNzY1NTkwNX0.T3BZ_QPrXUcww0nByZLWxa-hB6dhH7yqkH9ItWPQFyc"
+            if (Test-Path $envFile -PathType Leaf) {
+                Get-Content $envFile | ForEach-Object {
+                    $line = $_.Trim()
+                    if ($line -and -not $line.StartsWith("#") -and $line.Contains("=")) {
+                        $parts = $line.Split("=", 2)
+                        $k = $parts[0].Trim()
+                        $v = $parts[1].Trim().Trim('"').Trim("'")
+                        if ($k -eq "VITE_SUPABASE_URL") { $urlVal = $v }
+                        if ($k -eq "VITE_SUPABASE_ANON_KEY") { $keyVal = $v }
+                    }
+                }
+            }
+            $envPayload = "window.__ENV__ = { VITE_SUPABASE_URL: '$urlVal', VITE_SUPABASE_ANON_KEY: '$keyVal' };"
+            $bytes = [System.Text.Encoding]::UTF8.GetBytes($envPayload)
+            $response.ContentType = "application/javascript; charset=utf-8"
+            $response.AddHeader("Access-Control-Allow-Origin", "*")
+            $response.ContentLength64 = $bytes.Length
+            $response.StatusCode = 200
+            $response.OutputStream.Write($bytes, 0, $bytes.Length)
+            $response.Close()
+            continue
+        }
+
         $filePath = Join-Path $baseDir $urlPath
         $filePath = [System.IO.Path]::GetFullPath($filePath)
 
@@ -58,11 +86,12 @@ while ($listener.IsListening) {
 
         # If exact file doesn't exist, check for .html extension or directory index.html
         if (-not (Test-Path $filePath -PathType Leaf)) {
+            $cleanPath = $urlPath.TrimEnd('/')
             if (Test-Path "$filePath.html" -PathType Leaf) {
                 $filePath = "$filePath.html"
             } elseif (Test-Path (Join-Path $filePath "index.html") -PathType Leaf) {
                 $filePath = Join-Path $filePath "index.html"
-            } elseif ($urlPath -eq "auth/callback" -and (Test-Path (Join-Path $baseDir "auth-callback.html"))) {
+            } elseif (($cleanPath -eq "auth/callback") -and (Test-Path (Join-Path $baseDir "auth-callback.html"))) {
                 $filePath = Join-Path $baseDir "auth-callback.html"
             }
         }

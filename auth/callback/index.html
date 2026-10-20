@@ -2,13 +2,130 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta http-equiv="refresh" content="0; url=../../auth-callback.html">
-  <title>Redirecting to Auth Callback...</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Authenticating | DEV CYCLE – Luxury 3D Showroom</title>
+  <meta name="theme-color" content="#060709">
+
+  <!-- Favicon SVG -->
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='45' fill='%230a0c10' stroke='%2310b981' stroke-width='6'/><path d='M50 20 L35 55 L52 55 L45 80 L70 45 L52 45 Z' fill='%2310b981'/></svg>">
+
+  <!-- Core & Auth Stylesheets -->
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/css/auth.css">
+
+  <!-- Dynamic Environment Variables -->
+  <script src="/env.js"></script>
+
+  <!-- Official Supabase JavaScript Client -->
+  <script src="/js/libs/supabase.js"></script>
   <script>
-    window.location.replace('../../auth-callback.html' + window.location.search + window.location.hash);
+    if (!window.supabase) {
+      document.write('<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"><\/script>');
+    }
   </script>
+
+  <!-- App Auth & Config Modules -->
+  <script src="/js/supabase-config.js"></script>
+  <script src="/js/supabase.js"></script>
+  <script src="/js/auth.js"></script>
 </head>
-<body style="background:#060709; color:#cbd5e1; font-family:sans-serif; text-align:center; padding:3rem;">
-  Verifying authentication...
+<body class="auth-page-wrapper">
+
+  <div class="auth-main-container">
+    <div class="auth-card" style="text-align:center; max-width:460px;">
+      <!-- Processing State -->
+      <div id="callback-loading-state">
+        <div class="auth-guard-spinner" style="margin:0 auto 1.5rem;"></div>
+        <h1 class="auth-title" style="font-size:1.6rem;">Verifying Session</h1>
+        <p class="auth-subtitle" style="margin-bottom:0;">Connecting with Supabase secure authentication servers...</p>
+      </div>
+
+      <!-- Error State -->
+      <div id="callback-error-state" style="display:none;">
+        <div style="width:56px; height:56px; border-radius:50%; background:rgba(239,68,68,0.15); color:#ef4444; display:flex; align-items:center; justify-content:center; margin:0 auto 1.25rem;">
+          <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg>
+        </div>
+        <h2 style="font-size:1.4rem; color:#fff; margin-bottom:0.5rem;">Authentication Notice</h2>
+        <p id="callback-error-msg" style="font-size:0.9rem; color:var(--metal-steel); line-height:1.5; margin-bottom:1.5rem;"></p>
+        <a href="/login" class="btn-primary" style="display:inline-block; text-align:center; padding:0.8rem 1.5rem;">RETURN TO LOGIN</a>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', async () => {
+      const loadingState = document.getElementById('callback-loading-state');
+      const errorState = document.getElementById('callback-error-state');
+      const errorMsg = document.getElementById('callback-error-msg');
+
+      const urlParams = new URLSearchParams(window.location.search);
+      const hashParams = new URLSearchParams(window.location.hash.substring(1));
+
+      // 1. Check for explicit error query parameters from Supabase OAuth
+      const error = urlParams.get('error') || hashParams.get('error');
+      const errorDescription = urlParams.get('error_description') || hashParams.get('error_description');
+
+      if (error) {
+        loadingState.style.display = 'none';
+        errorState.style.display = 'block';
+        errorMsg.textContent = decodeURIComponent(errorDescription || error || 'An error occurred during authentication.');
+        return;
+      }
+
+      // 2. Check if this is a password recovery link
+      const type = urlParams.get('type') || hashParams.get('type');
+      if (type === 'recovery') {
+        window.location.replace(`/reset-password${window.location.hash || window.location.search}`);
+        return;
+      }
+
+      await window.devAuth.waitForInit();
+      const client = window.devAuth.getClient();
+
+      // 3. Check for PKCE authorization code in URL
+      const code = urlParams.get('code');
+      if (code) {
+        try {
+          const { data, error: exchangeError } = await client.auth.exchangeCodeForSession(code);
+          if (exchangeError) throw exchangeError;
+          if (data?.session) {
+            const savedRedirect = sessionStorage.getItem('devcycle_auth_redirect');
+            sessionStorage.removeItem('devcycle_auth_redirect');
+            window.location.replace(savedRedirect || '/dashboard');
+            return;
+          }
+        } catch (err) {
+          console.warn('[Auth Callback] Code exchange error:', err);
+          loadingState.style.display = 'none';
+          errorState.style.display = 'block';
+          errorMsg.textContent = err.message || 'Failed to exchange authorization code with Supabase.';
+          return;
+        }
+      }
+
+      // 4. Check current session or hash-based token
+      const session = window.devAuth.currentSession;
+      if (session) {
+        const savedRedirect = sessionStorage.getItem('devcycle_auth_redirect');
+        const target = savedRedirect || '/dashboard';
+        sessionStorage.removeItem('devcycle_auth_redirect');
+        window.location.replace(target);
+      } else {
+        // Wait a short moment in case exchange is in flight
+        setTimeout(async () => {
+          const { data } = await client.auth.getSession();
+          if (data?.session) {
+            const savedRedirect = sessionStorage.getItem('devcycle_auth_redirect');
+            sessionStorage.removeItem('devcycle_auth_redirect');
+            window.location.replace(savedRedirect || '/dashboard');
+          } else {
+            loadingState.style.display = 'none';
+            errorState.style.display = 'block';
+            errorMsg.textContent = 'No active session was established. Please sign in manually with your email and password.';
+          }
+        }, 1200);
+      }
+    });
+  </script>
 </body>
 </html>

@@ -11,11 +11,14 @@
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='45' fill='%230a0c10' stroke='%2310b981' stroke-width='6'/><path d='M50 20 L35 55 L52 55 L45 80 L70 45 L52 45 Z' fill='%2310b981'/></svg>">
 
   <!-- Core & Auth Stylesheets -->
-  <link rel="stylesheet" href="css/style.css">
-  <link rel="stylesheet" href="css/auth.css">
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/css/auth.css">
+
+  <!-- Dynamic Environment Variables -->
+  <script src="/env.js"></script>
 
   <!-- Official Supabase JavaScript Client -->
-  <script src="js/libs/supabase.js"></script>
+  <script src="/js/libs/supabase.js"></script>
   <script>
     if (!window.supabase) {
       document.write('<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"><\/script>');
@@ -23,10 +26,10 @@
   </script>
 
   <!-- App Auth, Store & Config Modules -->
-  <script src="js/supabase-config.js"></script>
-  <script src="js/supabase.js"></script>
-  <script src="js/store.js"></script>
-  <script src="js/auth.js"></script>
+  <script src="/js/supabase-config.js"></script>
+  <script src="/js/supabase.js"></script>
+  <script src="/js/store.js"></script>
+  <script src="/js/auth.js"></script>
 </head>
 <body style="background-color: var(--bg-darkest); color: var(--metal-silver);">
 
@@ -43,7 +46,7 @@
     <header class="main-navbar" id="main-navbar" style="position:sticky; top:0; z-index:100; background:rgba(6,7,9,0.9); backdrop-filter:blur(16px); border-bottom:1px solid var(--border-subtle);">
       <div class="container nav-inner">
         <!-- Brand Logo -->
-        <a href="index.html" class="brand-logo" id="nav-brand-logo">
+        <a href="/" class="brand-logo" id="nav-brand-logo">
           <svg class="logo-symbol" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
             <circle cx="50" cy="50" r="42" stroke="url(#logo-grad)" stroke-width="6" stroke-dasharray="180 30"/>
             <path d="M54 22L36 54H53L44 78L70 46H52L58 22Z" fill="#10b981"/>
@@ -62,16 +65,16 @@
 
         <!-- Desktop Navigation Menu -->
         <nav class="nav-menu" id="nav-desktop-menu">
-          <a href="index.html#hero" class="nav-link">Showroom Home</a>
-          <a href="index.html#bicycles" class="nav-link">Performance Cycles</a>
-          <a href="index.html#studio-3d" class="nav-link">3D Configurator</a>
-          <a href="index.html#gym" class="nav-link">Gym Machines</a>
-          <a href="dashboard.html" class="nav-link active" style="color:var(--accent-lime);">Dashboard</a>
+          <a href="/#hero" class="nav-link">Showroom Home</a>
+          <a href="/#bicycles" class="nav-link">Performance Cycles</a>
+          <a href="/#studio-3d" class="nav-link">3D Configurator</a>
+          <a href="/#gym" class="nav-link">Gym Machines</a>
+          <a href="/dashboard" class="nav-link active" style="color:var(--accent-lime);">Dashboard</a>
         </nav>
 
         <!-- Nav Actions -->
         <div class="nav-actions">
-          <a href="profile.html" class="nav-icon-btn" title="Profile Settings">
+          <a href="/profile" class="nav-icon-btn" title="Profile Settings">
             <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
           </a>
           <button class="btn-primary" id="btn-quick-logout" style="padding:0.45rem 1rem; font-size:0.8rem;">
@@ -328,7 +331,7 @@
   <script>
     document.addEventListener('DOMContentLoaded', async () => {
       // 1. Guard check: Must be authenticated
-      const isAuthed = await window.devAuth.requireAuth({ redirectTo: 'login.html' });
+      const isAuthed = await window.devAuth.requireAuth({ redirectTo: '/login' });
       if (!isAuthed) return;
 
       const user = window.devAuth.currentUser;
@@ -362,7 +365,7 @@
 
       // Quick Logout Button
       document.getElementById('btn-quick-logout').addEventListener('click', () => {
-        window.devAuth.signOut('login.html');
+        window.devAuth.signOut('/login');
       });
 
       // Test Session Ping Button

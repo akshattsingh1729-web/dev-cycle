@@ -174,7 +174,11 @@ class DevCycleAuth {
       });
 
       if (error) {
-        return { success: false, error: error.message };
+        let msg = error.message;
+        if (msg.includes('already registered') || msg.includes('User already exists')) {
+          msg = 'An account with this email address already exists. Please sign in or use forgot password.';
+        }
+        return { success: false, error: msg };
       }
 
       // Check if email confirmation is required (session is null when unverified)
@@ -255,7 +259,12 @@ class DevCycleAuth {
       });
 
       if (error) {
-        return { success: false, error: error.message };
+        let errorMsg = error.message;
+        if (errorMsg.includes('Unsupported provider') || errorMsg.includes('provider is not enabled') || errorMsg.includes('validation_failed')) {
+          errorMsg = `Google OAuth is not enabled in your Supabase project yet.
+To enable: In your Supabase Dashboard, go to Authentication > Providers > Google, enable it, and add your Google Cloud OAuth Client ID and Secret. Also add "${redirectTo}" to your Allowed Redirect URLs.`;
+        }
+        return { success: false, error: errorMsg };
       }
 
       return { success: true, data };
